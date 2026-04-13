@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class StockDemo {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        System.out.print("Enter stock symbol: ");
+        String symbol = in.nextLine().trim();
+
+        System.out.print("Enter stock name: ");
+        String name = in.nextLine().trim();
+
+        System.out.print("Enter prior closing price: ");
+        double prior = readDouble(in);
+
+        System.out.print("Enter current price: ");
+        double current = readDouble(in);
+
+        Stock stock = new Stock(symbol, name, prior, current);
+
+        System.out.println();
+        System.out.println("Stock details:");
+        System.out.println("Symbol: " + stock.getSymbol());
+        System.out.println("Name: " + stock.getName());
+        System.out.println("Prior closing price: " + stock.getPriorClosingPrice());
+        System.out.println("Current price: " + stock.getCurrentPrice());
+        System.out.printf("Price-change percentage: %.2f%%\n", stock.getChangePercent());
+
+        in.close();
+    }
+    
+    private static double readDouble(Scanner in) {
+        while (!in.hasNextDouble()) {
+            System.out.print("Please enter a valid number: ");
+            in.next();
+        }
+        return in.nextDouble();
+    }
+}
+
