@@ -1,0 +1,68 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Demo {
+    public static void main(String[] args) {
+        ArrayList<Policy> policies = new ArrayList<>();
+
+        try {
+            File file = new File("PolicyInformation.txt");
+            Scanner inputFile = new Scanner(file);
+
+            while (inputFile.hasNextLine()) {
+                String policyNumber = inputFile.nextLine();
+                String providerName = inputFile.nextLine();
+                String firstName = inputFile.nextLine();
+                String lastName = inputFile.nextLine();
+                int age = Integer.parseInt(inputFile.nextLine());
+                String smokingStatus = inputFile.nextLine();
+                double height = Double.parseDouble(inputFile.nextLine());
+                double weight = Double.parseDouble(inputFile.nextLine());
+
+                // Create Policy object
+                Policy policy = new Policy(
+                        policyNumber,
+                        providerName,
+                        firstName,
+                        lastName,
+                        age,
+                        smokingStatus,
+                        height,
+                        weight
+                );
+
+                // Add to ArrayList
+                policies.add(policy);
+            }
+
+            inputFile.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: PolicyInformation.txt not found.");
+            return;
+        }
+
+        // Display all policies
+        for (Policy p : policies) {
+            System.out.println(p);
+            System.out.println();
+        }
+
+        // Optional: count smokers vs non-smokers
+        int smokerCount = 0;
+        int nonSmokerCount = 0;
+
+        for (Policy p : policies) {
+            if (p.getSmokingStatus().equalsIgnoreCase("smoker")) {
+                smokerCount++;
+            } else {
+                nonSmokerCount++;
+            }
+        }
+
+        System.out.println("Number of Smokers: " + smokerCount);
+        System.out.println("Number of Non-Smokers: " + nonSmokerCount);
+    }
+}
